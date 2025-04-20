@@ -1,23 +1,21 @@
 <script setup lang="ts">
-import { useCalculatorModel } from '../../../model/calculator'
+import { calculatorInjectionKey } from '../../../model/calculator'
+import { inject } from 'vue'
 
-const calculatorModel = useCalculatorModel()
+const calculatorModel = inject(calculatorInjectionKey)
+const amount = calculatorModel?.amount ?? 0
 
 function onChangeInput(event: Event) {
+  if (calculatorModel === undefined) return
+
   calculatorModel.changeAmount((event.target as HTMLInputElement).value)
 }
 </script>
 
 <template>
   <div class="container">
-    <input
-      type="number"
-      name="amount"
-      placeholder="сумма"
-      :value="calculatorModel.amount"
-      @input="onChangeInput"
-    />
-    <label for="amount">{{ calculatorModel.amount }}</label>
+    <input type="number" name="amount" placeholder="сумма" :value="amount" @input="onChangeInput" />
+    <label for="amount">{{ amount }}</label>
   </div>
 </template>
 

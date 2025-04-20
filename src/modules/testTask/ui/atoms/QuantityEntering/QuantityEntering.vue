@@ -1,9 +1,13 @@
 <script setup lang="ts">
-import { useCalculatorModel } from '../../../model/calculator'
+import { calculatorInjectionKey } from '../../../model/calculator'
+import { inject } from 'vue'
 
-const calculatorModel = useCalculatorModel()
+const calculatorModel = inject(calculatorInjectionKey)
+const quantity = calculatorModel?.quantity ?? 0
 
 function onChangeInput(event: Event) {
+  if (calculatorModel === undefined) return
+
   calculatorModel.changeQuantity((event.target as HTMLInputElement).value)
 }
 </script>
@@ -15,9 +19,9 @@ function onChangeInput(event: Event) {
       name="amount"
       placeholder="кол-во"
       @input="onChangeInput"
-      :value="calculatorModel.quantity"
+      :value="quantity"
     />
-    <label for="amount">{{ calculatorModel.quantity }}</label>
+    <label for="amount">{{ quantity }}</label>
   </div>
 </template>
 

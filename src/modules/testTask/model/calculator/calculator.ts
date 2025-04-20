@@ -1,5 +1,4 @@
 import { ref } from 'vue'
-import { defineStore } from 'pinia'
 import {
   calculateAmount,
   calculatePrice,
@@ -9,7 +8,7 @@ import {
 } from './calculatorUtils'
 import type { TQueue } from './calculatorTypes'
 
-export const useCalculatorModel = defineStore('calculator', () => {
+export function useCalculatorModel() {
   const amount = ref<number>(0)
   const price = ref<number>(0)
   const quantity = ref<number>(0)
@@ -70,4 +69,4 @@ export const useCalculatorModel = defineStore('calculator', () => {
   }
 
   return { amount, price, quantity, queue, changeAmount, changePrice, changeQuantity }
-})
+}

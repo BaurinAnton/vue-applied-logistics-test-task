@@ -3,6 +3,10 @@ import { AmountEntering } from '../../atoms/AmountEntering'
 import { PriceEntering } from '../../atoms/PriceEntering'
 import { QuantityEntering } from '../../atoms/QuantityEntering'
 import { SendingDataLaunch } from '../../atoms/SendingDataLaunch'
+import { useCalculatorModel, calculatorInjectionKey } from '../../../model/calculator'
+import { provide } from 'vue'
+
+provide(calculatorInjectionKey, useCalculatorModel())
 </script>
 
 <template>
