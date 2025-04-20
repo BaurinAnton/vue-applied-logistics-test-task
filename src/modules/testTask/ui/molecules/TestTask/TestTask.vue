@@ -1,12 +1,14 @@
 <script setup lang="ts">
+import { provide } from 'vue'
+import { useCalculatorModel, calculatorInjectionKey } from '../../../model/calculator'
+import { useCounterModel } from '../../../model/counter'
 import { AmountEntering } from '../../atoms/AmountEntering'
 import { PriceEntering } from '../../atoms/PriceEntering'
 import { QuantityEntering } from '../../atoms/QuantityEntering'
 import { SendingDataLaunch } from '../../atoms/SendingDataLaunch'
-import { useCalculatorModel, calculatorInjectionKey } from '../../../model/calculator'
-import { provide } from 'vue'
 
 provide(calculatorInjectionKey, useCalculatorModel())
+const counterModel = useCounterModel()
 </script>
 
 <template>
@@ -16,6 +18,7 @@ provide(calculatorInjectionKey, useCalculatorModel())
     <AmountEntering />
     <SendingDataLaunch />
   </div>
+  <div>Count: {{ counterModel.counter }}</div>
 </template>
 
 <style lang="css" scoped>
