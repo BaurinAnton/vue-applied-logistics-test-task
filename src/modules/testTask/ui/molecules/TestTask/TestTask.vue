@@ -8,6 +8,7 @@ import { AmountEntering } from '../../atoms/AmountEntering'
 import { PriceEntering } from '../../atoms/PriceEntering'
 import { QuantityEntering } from '../../atoms/QuantityEntering'
 import { SendingDataLaunch } from '../../atoms/SendingDataLaunch'
+import { QueueEventList } from '../../atoms/QueueEventList'
 
 const calculatorAndCounterModel = useCalculatorAndCounterModel()
 const counter = computed(() => calculatorAndCounterModel.counterModel.counter.value)
@@ -21,7 +22,8 @@ provide(calculatorAndCounterInjectionKey, calculatorAndCounterModel)
     <AmountEntering />
     <SendingDataLaunch />
   </div>
-  <div>Count: {{ counter }}</div>
+  <div>Count: {{ counter }} - монотонно возрастающее число</div>
+  <QueueEventList />
 </template>
 
 <style lang="css" scoped>

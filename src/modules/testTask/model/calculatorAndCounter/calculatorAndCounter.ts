@@ -3,11 +3,13 @@ import { getCalculatorAndCounterData, setCalculatorAndCounterData } from '../../
 import type { TLocalStorageDataDTO } from '../../api/localStorage/DTO'
 import { useCalculatorModel } from '../calculator'
 import { useCounterModel } from '../counter'
+import { useQueueEvent } from '../queueEvent'
 
 export function useCalculatorAndCounterModel() {
   const calculatorModel = useCalculatorModel()
   const counterModel = useCounterModel()
-  const calculatorAndCounterDataForLocalStorage = ref<string | null>(null)
+  const queueEventModel = useQueueEvent()
+  const dataForLocalStorage = ref<string | null>(null)
 
   function setData() {
     const data: TLocalStorageDataDTO = {
@@ -17,15 +19,39 @@ export function useCalculatorAndCounterModel() {
       counter: counterModel.counter.value,
     }
 
+    queueEventModel.setEvent(
+      `событие нажатия кнопки 4 - приложить то что было отправлено: ${JSON.stringify(data)}`,
+    )
+
+    queueEventModel.setEvent(
+      `событие нажатия кнопки 4 - показать то что в момент нажатия в localStorage: ${getCalculatorAndCounterData()}`,
+    )
+
     setCalculatorAndCounterData(data).then((status) => {
       alert(`Статус отправки: ${status.success}`)
-      setCalculatorAndCounterDataForLocalStorage()
+      queueEventModel.setEvent(
+        'событие когда получили ответ после нажатия submit (4)' +
+          '- приложить то что было отправлено: ' +
+          JSON.stringify(data),
+      )
+      queueEventModel.setEvent(
+        'событие когда получили ответ после нажатия submit (4)' +
+          ' + то что в этот момент в localStorage: ' +
+          getCalculatorAndCounterData(),
+      )
+      getDataForLocalStorage()
     })
   }
 
-  function setCalculatorAndCounterDataForLocalStorage() {
-    calculatorAndCounterDataForLocalStorage.value = getCalculatorAndCounterData()
+  function getDataForLocalStorage() {
+    dataForLocalStorage.value = getCalculatorAndCounterData()
   }
 
-  return { calculatorModel, counterModel, setData, calculatorAndCounterDataForLocalStorage }
+  return {
+    calculatorModel,
+    counterModel,
+    queueEventModel,
+    setData,
+    dataForLocalStorage,
+  }
 }

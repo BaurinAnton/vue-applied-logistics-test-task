@@ -3,25 +3,26 @@ import { debounce } from '@/core/utils'
 import { calculatorAndCounterInjectionKey } from '../../../model/calculatorAndCounter'
 import { inject } from 'vue'
 
-const DELAY_DEBOUNCE = 300
+const DELAY_DEBOUNCE = 300 // TODO: Вынести
 const calculatorModel = inject(calculatorAndCounterInjectionKey)?.calculatorModel
-const quantity = calculatorModel?.quantity ?? 0
+const queueEventModel = inject(calculatorAndCounterInjectionKey)?.queueEventModel
 
 const onChangeInput = debounce<Event>((event: Event) => {
   calculatorModel?.changeQuantity((event.target as HTMLInputElement).value)
+  queueEventModel?.setEvent('событие изменения input-ов (2)')
 }, DELAY_DEBOUNCE)
 </script>
 
 <template>
-  <div class="container">
+  <div class="container" v-if="calculatorModel">
     <input
       type="number"
       name="amount"
       placeholder="кол-во"
       @input="onChangeInput"
-      :value="quantity"
+      :value="calculatorModel.quantity.value"
     />
-    <label for="amount">{{ quantity }}</label>
+    <label for="amount">{{ calculatorModel.quantity.value }}</label>
   </div>
 </template>
 
