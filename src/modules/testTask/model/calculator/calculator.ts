@@ -5,7 +5,7 @@ import {
   calculateQuantity,
   getCurrentQueue,
   convertInputValueInNumber,
-} from './calculatorUtils'
+} from './calculatorHelpers'
 import type { TQueue } from './calculatorTypes'
 
 export function useCalculatorModel() {
