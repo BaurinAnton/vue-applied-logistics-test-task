@@ -4,6 +4,7 @@ import type { TLocalStorageDataDTO } from '../../api/localStorage/DTO'
 import { useCalculatorModel } from '../calculator'
 import { useCounterModel } from '../counter'
 import { useQueueEvent } from '../queueEvent'
+import { isEven } from '@/core/utils'
 
 export function useCalculatorAndCounterModel() {
   const calculatorModel = useCalculatorModel()
@@ -12,6 +13,8 @@ export function useCalculatorAndCounterModel() {
   const dataForLocalStorage = ref<string | null>(null)
 
   function setData() {
+    if (!isEven(calculatorModel.amount.value)) return
+
     const data: TLocalStorageDataDTO = {
       amount: calculatorModel.amount.value,
       price: calculatorModel.price.value,
