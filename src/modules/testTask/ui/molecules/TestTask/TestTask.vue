@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, provide } from 'vue'
+import { provide } from 'vue'
 import {
   useCalculatorAndCounterModel,
   calculatorAndCounterInjectionKey,
@@ -9,10 +9,9 @@ import { PriceEntering } from '../../atoms/PriceEntering'
 import { QuantityEntering } from '../../atoms/QuantityEntering'
 import { SendingDataLaunch } from '../../atoms/SendingDataLaunch'
 import { QueueEventList } from '../../atoms/QueueEventList'
+import { MonotonouslyIncreasingNumber } from '../../atoms/MonotonouslyIncreasingNumber'
 
-const calculatorAndCounterModel = useCalculatorAndCounterModel()
-const counter = computed(() => calculatorAndCounterModel.counterModel.counter.value)
-provide(calculatorAndCounterInjectionKey, calculatorAndCounterModel)
+provide(calculatorAndCounterInjectionKey, useCalculatorAndCounterModel())
 </script>
 
 <template>
@@ -22,7 +21,7 @@ provide(calculatorAndCounterInjectionKey, calculatorAndCounterModel)
     <AmountEntering />
     <SendingDataLaunch />
   </div>
-  <div>Count: {{ counter }} - монотонно возрастающее число</div>
+  <MonotonouslyIncreasingNumber />
   <QueueEventList />
 </template>
 
