@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { calculatorInjectionKey } from '../../../model/calculator'
+import { calculatorAndCounterInjectionKey } from '../../../model/calculatorAndCounter'
 import { inject } from 'vue'
 
-const calculatorModel = inject(calculatorInjectionKey)
+const calculatorModel = inject(calculatorAndCounterInjectionKey)?.calculatorModel
 const amount = calculatorModel?.amount ?? 0
 
 function onChangeInput(event: Event) {
