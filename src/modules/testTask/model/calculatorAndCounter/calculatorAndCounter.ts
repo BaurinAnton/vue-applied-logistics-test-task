@@ -12,7 +12,7 @@ export function useCalculatorAndCounterModel() {
   const queueEventModel = useQueueEvent()
   const dataForLocalStorage = ref<string | null>(null)
 
-  function setData() {
+  function setDataForLocalStorage() {
     if (!isEven(calculatorModel.amount.value)) return
 
     const data: TLocalStorageDataDTO = {
@@ -54,7 +54,7 @@ export function useCalculatorAndCounterModel() {
     calculatorModel,
     counterModel,
     queueEventModel,
-    setData,
     dataForLocalStorage,
+    setDataForLocalStorage,
   }
 }

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { inject } from 'vue'
-import { calculatorAndCounterInjectionKey } from '../../../model/calculatorAndCounter'
+import { calculatorAndCounterInjectionKey } from '../../../../model/calculatorAndCounter'
 
 const counterModel = inject(calculatorAndCounterInjectionKey)?.counterModel
 </script>

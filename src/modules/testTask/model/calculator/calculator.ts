@@ -7,12 +7,13 @@ import {
   convertInputValueInNumber,
 } from './calculatorHelpers'
 import type { TQueue } from './calculatorTypes'
+import { DEFAULT_QUEUE } from './calculatorConstants'
 
 export function useCalculatorModel() {
   const amount = ref<number>(0)
   const price = ref<number>(0)
   const quantity = ref<number>(0)
-  const queue = ref<TQueue>(['price', 'quantity', 'amount'])
+  const queue = ref<TQueue>(DEFAULT_QUEUE as TQueue)
 
   function changePrice(value: string) {
     const convertedValue = convertInputValueInNumber(value)
@@ -68,5 +69,5 @@ export function useCalculatorModel() {
     }
   }
 
-  return { amount, price, quantity, queue, changeAmount, changePrice, changeQuantity }
+  return { amount, price, quantity, changeAmount, changePrice, changeQuantity }
 }

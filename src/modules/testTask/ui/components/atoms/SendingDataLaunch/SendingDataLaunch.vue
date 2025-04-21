@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { calculatorAndCounterInjectionKey } from '../../../model/calculatorAndCounter'
+import { calculatorAndCounterInjectionKey } from '../../../../model/calculatorAndCounter'
 import { inject } from 'vue'
 
 const calculatorAndCounterModel = inject(calculatorAndCounterInjectionKey)
 
 function onClick() {
-  calculatorAndCounterModel?.setData()
+  calculatorAndCounterModel?.setDataForLocalStorage()
 }
 </script>
 

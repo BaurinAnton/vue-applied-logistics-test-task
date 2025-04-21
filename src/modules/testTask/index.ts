@@ -1,1 +1,1 @@
-export { TestTask } from './ui/molecules/TestTask'
+export { TestTask } from './ui/components/molecules/TestTask'

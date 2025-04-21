@@ -3,7 +3,7 @@ import { provide } from 'vue'
 import {
   useCalculatorAndCounterModel,
   calculatorAndCounterInjectionKey,
-} from '../../../model/calculatorAndCounter'
+} from '../../../../model/calculatorAndCounter'
 import { AmountEntering } from '../../atoms/AmountEntering'
 import { PriceEntering } from '../../atoms/PriceEntering'
 import { QuantityEntering } from '../../atoms/QuantityEntering'

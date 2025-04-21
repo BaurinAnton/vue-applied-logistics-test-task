@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { calculatorAndCounterInjectionKey } from '@/modules/testTask/model/calculatorAndCounter'
 import { inject } from 'vue'
+import { calculatorAndCounterInjectionKey } from '../../../../model/calculatorAndCounter'
 
 const queueEventModel = inject(calculatorAndCounterInjectionKey)?.queueEventModel
 </script>

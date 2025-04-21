@@ -5,6 +5,7 @@ export function getCalculatorAndCounterData(): string | null {
   if (jsonData === null) return null
 
   return jsonData
+  // Если бы требовалось возвращаемым значением - объект:
   // const parsedData = JSON.parse(jsonData)
   // const validatedData = validateData(parsedData)
 

@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { debounce } from '@/core/utils'
-import { calculatorAndCounterInjectionKey } from '../../../model/calculatorAndCounter'
+import { calculatorAndCounterInjectionKey } from '../../../../model/calculatorAndCounter'
 import { inject } from 'vue'
+import { DELAY_DEBOUNCE } from '../../../constants'
 
-const DELAY_DEBOUNCE = 300 // TODO: Вынести
 const calculatorModel = inject(calculatorAndCounterInjectionKey)?.calculatorModel
 const queueEventModel = inject(calculatorAndCounterInjectionKey)?.queueEventModel
 
 const onChangeInput = debounce<Event>((event: Event) => {
-  calculatorModel?.changeQuantity((event.target as HTMLInputElement).value)
-  queueEventModel?.setEvent('событие изменения input-ов (2)')
+  calculatorModel?.changePrice((event.target as HTMLInputElement).value)
+  queueEventModel?.setEvent('событие изменения input-ов (1)')
 }, DELAY_DEBOUNCE)
 </script>
 
@@ -17,12 +17,12 @@ const onChangeInput = debounce<Event>((event: Event) => {
   <div class="container" v-if="calculatorModel">
     <input
       type="number"
-      name="amount"
-      placeholder="кол-во"
+      name="price"
+      placeholder="цена"
       @input="onChangeInput"
-      :value="calculatorModel.quantity.value"
+      :value="calculatorModel.price.value"
     />
-    <label for="amount">{{ calculatorModel.quantity.value }}</label>
+    <label for="price">{{ calculatorModel.price }}</label>
   </div>
 </template>
 
