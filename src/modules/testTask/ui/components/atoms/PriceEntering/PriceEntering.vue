@@ -5,7 +5,7 @@ import { inject } from 'vue'
 const calculatorModel = inject(calculatorAndCounterInjectionKey)?.calculatorModel
 
 function onChangeInput (event: Event)  {
-  calculatorModel?.changePrice((event.target as HTMLInputElement).value)
+  calculatorModel?.onPriceChange((event.target as HTMLInputElement).value)
 }
 </script>
 

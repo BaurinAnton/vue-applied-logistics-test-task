@@ -4,9 +4,9 @@ export type TCalculatorModel = {
   amount: Ref<number, number>
   price: Ref<number, number>
   quantity: Ref<number, number>
-  changeAmount: (data: string) => void
-  changePrice: (data: string) => void
-  changeQuantity: (data: string) => void
+  onPriceChange: (data: string) => void
+  onQuantityChange: (data: string) => void
+  onAmountChange: (data: string) => void
 }
 
 export type TCounterModel = {

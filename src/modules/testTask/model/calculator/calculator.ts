@@ -16,7 +16,22 @@ export function useCalculatorModel(queueEventModel: TQueueEventModel) {
   const quantity = ref<number>(0)
   const queue = ref<TQueue>(DEFAULT_QUEUE as TQueue)
 
-  const changePrice = debounce<string>((value: string) => {
+  const onPriceChange = debounce<string>((value: string) => {
+    changePrice(value)
+    queueEventModel.setEvent('событие изменения input-ов (1)')
+  }, 300)
+
+  const onQuantityChange = debounce<string>((value) => {
+    changeQuantity(value)
+    queueEventModel.setEvent('событие изменения input-ов (1)')
+  }, 300)
+
+  const onAmountChange = debounce<string>((value) => {
+    changeAmount(value)
+    queueEventModel.setEvent('событие изменения input-ов (3)')
+  }, 300)
+
+  function changePrice(value: string) {
     const convertedValue = convertInputValueInNumber(value)
 
     if (convertedValue === null) return
@@ -24,19 +39,10 @@ export function useCalculatorModel(queueEventModel: TQueueEventModel) {
     price.value = convertedValue
     queue.value = getCurrentQueue(queue.value, 'price')
     const lastImmutableField = queue.value[queue.value.length - 1]
+    changeReactiveFields(lastImmutableField)
+  }
 
-    if (lastImmutableField === 'amount') {
-      amount.value = calculateAmount({ quantity: quantity.value, price: price.value })
-    }
-
-    if (lastImmutableField === 'quantity') {
-      quantity.value = calculateQuantity({ price: price.value, amount: amount.value })
-    }
-
-    queueEventModel.setEvent('событие изменения input-ов (1)')
-  }, 300)
-
-  const changeQuantity = debounce<string>((value: string) => {
+  function changeQuantity(value: string) {
     const convertedValue = convertInputValueInNumber(value)
 
     if (convertedValue === null) return
@@ -44,19 +50,10 @@ export function useCalculatorModel(queueEventModel: TQueueEventModel) {
     quantity.value = convertedValue
     queue.value = getCurrentQueue(queue.value, 'quantity')
     const lastImmutableField = queue.value[queue.value.length - 1]
+    changeReactiveFields(lastImmutableField)
+  }
 
-    if (lastImmutableField === 'price') {
-      price.value = calculatePrice({ quantity: quantity.value, amount: amount.value })
-    }
-
-    if (lastImmutableField === 'amount') {
-      amount.value = calculateAmount({ quantity: quantity.value, price: price.value })
-    }
-
-    queueEventModel.setEvent('событие изменения input-ов (2)')
-  }, 300)
-
-  const changeAmount = debounce<string>((value: string) => {
+  function changeAmount(value: string) {
     const convertedValue = convertInputValueInNumber(value)
 
     if (convertedValue === null) return
@@ -64,7 +61,10 @@ export function useCalculatorModel(queueEventModel: TQueueEventModel) {
     amount.value = convertedValue
     queue.value = getCurrentQueue(queue.value, 'amount')
     const lastImmutableField = queue.value[queue.value.length - 1]
+    changeReactiveFields(lastImmutableField)
+  }
 
+  function changeReactiveFields(lastImmutableField: string) {
     if (lastImmutableField === 'price') {
       price.value = calculatePrice({ quantity: quantity.value, amount: amount.value })
     }
@@ -73,8 +73,10 @@ export function useCalculatorModel(queueEventModel: TQueueEventModel) {
       quantity.value = calculateQuantity({ price: price.value, amount: amount.value })
     }
 
-    queueEventModel.setEvent('событие изменения input-ов (3)')
-  }, 300)
+    if (lastImmutableField === 'amount') {
+      amount.value = calculateAmount({ quantity: quantity.value, price: price.value })
+    }
+  }
 
-  return { amount, price, quantity, changeAmount, changePrice, changeQuantity }
+  return { amount, price, quantity, onPriceChange, onQuantityChange, onAmountChange }
 }
