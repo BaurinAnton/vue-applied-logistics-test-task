@@ -2,18 +2,18 @@
 import { calculatorAndCounterInjectionKey } from '../../../../model/calculatorAndCounter'
 import { inject } from 'vue'
 
-const calculatorAndCounterModel = inject(calculatorAndCounterInjectionKey)
+const localStorageModel = inject(calculatorAndCounterInjectionKey)?.localStorageModel
 
 function onClick() {
-  calculatorAndCounterModel?.setDataForLocalStorage()
+  localStorageModel?.setDataForLocalStorage()
 }
 </script>
 
 <template>
   <div class="container">
     <button name="button" @click="onClick">Отправить</button>
-    <label for="button" v-if="calculatorAndCounterModel"
-      >{{ calculatorAndCounterModel.dataForLocalStorage.value }}
+    <label for="button" v-if="localStorageModel"
+      >{{ localStorageModel.dataForLocalStorage.value }}
     </label>
   </div>
 </template>

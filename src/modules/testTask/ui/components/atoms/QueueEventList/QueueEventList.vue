@@ -6,9 +6,9 @@ const queueEventModel = inject(calculatorAndCounterInjectionKey)?.queueEventMode
 </script>
 
 <template>
-  <ui class="queue-event-container" v-if="queueEventModel">
-    <li v-for="event in queueEventModel.queueEvent.value" :key="event">
-      {{ event }}
+  <ul v-if="queueEventModel">
+    <li v-for="event in queueEventModel.queueEvent.value" :key="event.id">
+      {{ event.value }}
     </li>
-  </ui>
+  </ul>
 </template>

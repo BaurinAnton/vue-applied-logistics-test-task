@@ -1,16 +1,12 @@
 <script setup lang="ts">
-import { debounce } from '@/core/utils'
 import { calculatorAndCounterInjectionKey } from '../../../../model/calculatorAndCounter'
 import { inject } from 'vue'
-import { DELAY_DEBOUNCE } from '../../../constants'
 
 const calculatorModel = inject(calculatorAndCounterInjectionKey)?.calculatorModel
-const queueEventModel = inject(calculatorAndCounterInjectionKey)?.queueEventModel
 
-const onChangeInput = debounce<Event>((event: Event) => {
+function onChangeInput (event: Event) {
   calculatorModel?.changeAmount((event.target as HTMLInputElement).value)
-  queueEventModel?.setEvent('событие изменения input-ов (3)')
-}, DELAY_DEBOUNCE)
+}
 </script>
 
 <template>

@@ -6,16 +6,17 @@ import {
   getCurrentQueue,
   convertInputValueInNumber,
 } from './calculatorHelpers'
-import type { TQueue } from './calculatorTypes'
+import type { TQueue, TQueueEventModel } from './calculatorTypes'
 import { DEFAULT_QUEUE } from './calculatorConstants'
+import { debounce } from '@/core/utils'
 
-export function useCalculatorModel() {
+export function useCalculatorModel(queueEventModel: TQueueEventModel) {
   const amount = ref<number>(0)
   const price = ref<number>(0)
   const quantity = ref<number>(0)
   const queue = ref<TQueue>(DEFAULT_QUEUE as TQueue)
 
-  function changePrice(value: string) {
+  const changePrice = debounce<string>((value: string) => {
     const convertedValue = convertInputValueInNumber(value)
 
     if (convertedValue === null) return
@@ -31,9 +32,11 @@ export function useCalculatorModel() {
     if (lastImmutableField === 'quantity') {
       quantity.value = calculateQuantity({ price: price.value, amount: amount.value })
     }
-  }
 
-  function changeQuantity(value: string) {
+    queueEventModel.setEvent('событие изменения input-ов (1)')
+  }, 300)
+
+  const changeQuantity = debounce<string>((value: string) => {
     const convertedValue = convertInputValueInNumber(value)
 
     if (convertedValue === null) return
@@ -49,9 +52,11 @@ export function useCalculatorModel() {
     if (lastImmutableField === 'amount') {
       amount.value = calculateAmount({ quantity: quantity.value, price: price.value })
     }
-  }
 
-  function changeAmount(value: string) {
+    queueEventModel.setEvent('событие изменения input-ов (2)')
+  }, 300)
+
+  const changeAmount = debounce<string>((value: string) => {
     const convertedValue = convertInputValueInNumber(value)
 
     if (convertedValue === null) return
@@ -67,7 +72,9 @@ export function useCalculatorModel() {
     if (lastImmutableField === 'quantity') {
       quantity.value = calculateQuantity({ price: price.value, amount: amount.value })
     }
-  }
+
+    queueEventModel.setEvent('событие изменения input-ов (3)')
+  }, 300)
 
   return { amount, price, quantity, changeAmount, changePrice, changeQuantity }
 }

@@ -1,0 +1,1 @@
+export { useLocalStorageModel } from './localStorage'
