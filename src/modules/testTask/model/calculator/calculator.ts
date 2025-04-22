@@ -7,7 +7,7 @@ import {
   convertInputValueInNumber,
 } from './calculatorHelpers'
 import type { TQueue, TQueueEventModel } from './calculatorTypes'
-import { DEFAULT_QUEUE } from './calculatorConstants'
+import { DEFAULT_QUEUE, DELAY_DEBOUNCE } from './calculatorConstants'
 import { debounce } from '@/core/utils'
 
 export function useCalculatorModel(queueEventModel: TQueueEventModel) {
@@ -19,17 +19,17 @@ export function useCalculatorModel(queueEventModel: TQueueEventModel) {
   const onPriceChange = debounce<string>((value: string) => {
     changePrice(value)
     queueEventModel.setEvent('событие изменения input-ов (1)')
-  }, 300)
+  }, DELAY_DEBOUNCE)
 
   const onQuantityChange = debounce<string>((value) => {
     changeQuantity(value)
     queueEventModel.setEvent('событие изменения input-ов (1)')
-  }, 300)
+  }, DELAY_DEBOUNCE)
 
   const onAmountChange = debounce<string>((value) => {
     changeAmount(value)
     queueEventModel.setEvent('событие изменения input-ов (3)')
-  }, 300)
+  }, DELAY_DEBOUNCE)
 
   function changePrice(value: string) {
     const convertedValue = convertInputValueInNumber(value)
